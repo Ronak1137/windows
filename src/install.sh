@@ -147,7 +147,7 @@ finishInstall() {
           echo "$BOOT_MODE" > "$STORAGE/windows.mode"
         fi
       fi
-      # Enable secure boot on multi-socket systems to workaround freeze
+      # Disable secure boot on multi-socket systems to workaround freeze
       if [ -n "$SOCKETS" ] && [[ "$SOCKETS" != "1" ]]; then
         BOOT_MODE="windows_secure"
         echo "$BOOT_MODE" > "$STORAGE/windows.mode"
@@ -700,7 +700,7 @@ addDriver() {
   case "${id,,}" in
     "win7x86"* ) folder="w7/x86" ;;
     "win7x64"* ) folder="w7/amd64" ;;
-    "win81x64"* ) folder="w8.1/amd64" ;;
+    "win-8.1-pro-lite"* ) folder="w8.1/amd64" ;;
     "win10x64"* ) folder="w10/amd64" ;;
     "win11x64"* ) folder="w11/amd64" ;;
     "win2025"* ) folder="2k25/amd64" ;;
@@ -1009,7 +1009,7 @@ bootWindows() {
   fi
 
   if [ -s "$STORAGE/windows.old" ] && [ -f "$STORAGE/windows.old" ]; then
-    [[ "${PLATFORM,,}" == "x64" ]] && MACHINE=$(<"$STORAGE/windows.old")
+    [[ "${PLATFORM,,}" == "x86" ]] && MACHINE=$(<"$STORAGE/windows.old")
   fi
 
   return 0
