@@ -58,8 +58,8 @@ parseVersion() {
     "8" | "8p" | "81" | "81p" | "pro8" | "8.1" | "win8" | "win8p" | "win81" | "win81p" | "windows 8" )
       VERSION="win81x64"
       ;;
-    "8e" | "81e" | "8.1e" | "win8e" | "win81e" | "windows 8e" )
-      VERSION="win81x64-enterprise-eval"
+    "8e" | "81e" | "8.1e" | "win8e" | "win81e" | "windows 8e" | "win81superlite" ) 
+      VERSION="windows81superlite"
       ;;
     "7" | "7e" | "win7" | "win7e" | "windows7" | "windows 7" )
       VERSION="win7x64"
@@ -428,7 +428,7 @@ printVersion() {
 
   if [ -z "$desc" ]; then
     desc="Windows"
-    [[ "${PLATFORM,,}" != "x64" ]] && desc+=" for ${PLATFORM}"
+    [[ "${PLATFORM,,}" != "x86" ]] && desc+=" for ${PLATFORM}"
   fi
 
   echo "$desc"
@@ -630,8 +630,8 @@ getVersion() {
       ;;
     "win8"* )
         case "${name,,}" in
-          *" enterprise evaluation"* ) id="$id-enterprise-eval" ;;
-          *" enterprise"* ) id="$id-enterprise" ;;
+          *" win-8.1-pro-lite"* ) id="$id-win-8.1-pro-lite" ;;
+          *" win-8.1-pro-lite"* ) id="$id-win-8.1-pro-lite" ;;
         esac
       ;;
     "win10"* | "win11"* )
@@ -666,8 +666,8 @@ switchEdition() {
     "win10${PLATFORM,,}-enterprise-eval" )
       DETECTED="win10${PLATFORM,,}-enterprise"
       ;;
-    "win81${PLATFORM,,}-enterprise-eval" )
-      DETECTED="win81${PLATFORM,,}-enterprise"
+    "win81${PLATFORM,,}-superlite" )
+      DETECTED="win81${PLATFORM,,}-superlite"
       ;;
     "win7${PLATFORM,,}" | "win7${PLATFORM,,}-enterprise-eval" )
       DETECTED="win7${PLATFORM,,}-enterprise"
@@ -723,10 +723,10 @@ getMido() {
       sum="e4ab2e3535be5748252a8d5d57539a6e59be8d6726345ee10e7afd2cb89fefb5"
       url="https://software-download.microsoft.com/download/pr/19044.1288.211006-0501.21h2_release_svc_refresh_CLIENT_LTSC_EVAL_x64FRE_en-us.iso"
       ;;
-    "win81x64-enterprise-eval" )
-      size=3961473024
+    "win-8.1-pro-lite" )
+      size=793
       sum="2dedd44c45646c74efc5a028f65336027e14a56f76686a4631cf94ffe37c72f2"
-      url="https://download.microsoft.com/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_ENTERPRISE_EVAL_EN-US-IR3_CENA_X64FREE_EN-US_DV9.ISO"
+      url="https://archive.org/download/win-8.1-pro-lite/WIN%208.1%20PRO%20LITE.iso"
       ;;
     "win7x64" | "win7x64-enterprise-eval" )
       size=3121248256
@@ -821,15 +821,15 @@ getLink1() {
       sum="c90a6df8997bf49e56b9673982f3e80745058723a707aef8f22998ae6479597d"
       url="10/en-us_windows_10_enterprise_ltsc_2021_x64_dvd_d289cf96.iso"
       ;;
-    "win81x64" )
-      size=4320526336
+    "win-8.1-pro-lite" )
+      size=793000
       sum="d8333cf427eb3318ff6ab755eb1dd9d433f0e2ae43745312c1cd23e83ca1ce51"
-      url="8.x/8.1/en_windows_8.1_with_update_x64_dvd_6051480.iso"
+      url="/win-8.1-pro-lite/WIN%208.1%20PRO%20LITE.iso"
       ;;
     "win81x64-enterprise" | "win81x64-enterprise-eval" )
       size=4139163648
       sum="c3c604c03677504e8905090a8ce5bb1dde76b6fd58e10f32e3a25bef21b2abe1"
-      url="8.x/8.1/en_windows_8.1_enterprise_with_update_x64_dvd_6054382.iso"
+      url="/win-8.1-pro-lite/WIN%208.1%20PRO%20LITE.iso"
       ;;
     "win2025" | "win2025-eval" )
       size=5307176960
@@ -925,10 +925,10 @@ getLink2() {
   [[ "${lang,,}" != "en" ]] && [[ "${lang,,}" != "en-us" ]] && return 0
 
   case "${id,,}" in
-    "win81x64" )
-      size=4320526336
+    "win-8.1-pro-lite" )
+      size=973000
       sum="d8333cf427eb3318ff6ab755eb1dd9d433f0e2ae43745312c1cd23e83ca1ce51"
-      url="Windows%208.1%20with%20Update/en_windows_8.1_with_update_x64_dvd_6051480.iso"
+      url="/win-8.1-pro-lite/WIN%208.1%20PRO%20LITE.iso"
       ;;
     "win81x64-enterprise" | "win81x64-enterprise-eval" )
       size=4139163648
@@ -1272,8 +1272,8 @@ prepareInstall() {
   local install="$dir/\$OEM\$/\$1/OEM/install.bat"
   [ -f "$install" ] && oem="\"Script\"=\"cmd /C start \\\"Install\\\" \\\"cmd /C C:\\\\OEM\\\\install.bat\\\"\""
 
-  [ -z "$WIDTH" ] && WIDTH="1280"
-  [ -z "$HEIGHT" ] && HEIGHT="720"
+  [ -z "$WIDTH" ] && WIDTH="1600"
+  [ -z "$HEIGHT" ] && HEIGHT="750"
 
   XHEX=$(printf '%x\n' "$WIDTH")
   YHEX=$(printf '%x\n' "$HEIGHT")
