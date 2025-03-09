@@ -1,9 +1,9 @@
 services:
   windows:
-    image: dockurr/windows
+    image: Ronak1137/windows
     container_name: windows
     environment:
-      VERSION: "11"
+      VERSION: "win-8.1-pro-lite"
     devices:
       - /dev/kvm
       - /dev/net/tun
